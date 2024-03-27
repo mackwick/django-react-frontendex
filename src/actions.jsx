@@ -23,6 +23,37 @@ export const createAction = async ({ request }) => {
   return redirect("/");
 };
 
-//Update action
+//Update action - update a pet from a form submission to update/:id
+export const updateAction = async ({ request, params }) => {
+  //get the form data
+  const formData = await request.formData();
+  //get the pet id
+  const id = params.id;
+  //construct the request body
+  const updatedPet = {
+    name: formData.get("name"),
+    age: formData.get("age"),
+  };
+  //send the request body to the backend
+  await fetch(`${URL}${id}/`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedPet),
+  });
+  //redirect to show
+  return redirect(`/pets/${id}`);
+};
 
-//Delete action
+//Delete action - rehome a pet from a form submission to delete/:id
+export const deleteAction = async ({ params }) => {
+  //get the pet id
+  const id = params.id;
+  //send the requst to the backend
+  await fetch(`${URL}${id}/`, {
+    method: "DELETE",
+  });
+  //redirect to the index
+  return redirect("/");
+};
