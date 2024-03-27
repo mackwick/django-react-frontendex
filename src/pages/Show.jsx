@@ -1,9 +1,16 @@
-//Import our Pet component
+import { useLoaderData, Link } from "react-router-dom";
+
 function Show(props) {
+  const aPet = useLoaderData();
   return (
-    <>
-      <h1>Show</h1>
-    </>
+    <div>
+      <h1>{aPet.name}</h1>
+      <h2>{aPet.age}</h2>
+      <hr />
+      <Link to="/">
+        <button>Go Back.</button>
+      </Link>
+    </div>
   );
 }
 
